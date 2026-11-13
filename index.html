@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transguard Group UAE - Multi-Hiring Careers 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f4f6f9;
+    }
+    .tg-gradient {
+      background: linear-gradient(135deg, #0b2545 0%, #134074 100%);
+    }
+    .apply-btn {
+      transition: all 0.2s ease;
+    }
+    .apply-btn:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+  <!-- Header -->
+  <header class="tg-gradient text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div>
+        <span class="inline-block bg-amber-500 text-slate-950 text-xs font-bold px-2.5 py-0.5 rounded uppercase tracking-wider mb-1">
+          UAE Multi-Hiring Drive
+        </span>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Transguard Group Careers</h1>
+      </div>
+      <div class="text-right hidden sm:block">
+        <p class="text-xs text-blue-200">Location: Dubai & Abu Dhabi</p>
+        <p class="text-xs font-semibold text-amber-400">Immediate Joining</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Info Banner -->
+  <section class="max-w-4xl mx-auto px-4 pt-6 pb-2">
+    <div class="bg-white border-l-4 border-amber-500 rounded-r-xl shadow-sm p-4 sm:p-5">
+      <h2 class="text-base sm:text-lg font-bold text-slate-900">Multiple Open Vacancies — Apply Online</h2>
+      <p class="text-sm text-gray-600 mt-1">
+        Transguard Group is actively recruiting across Security, Facilities Management, Aviation, Hospitality, and Logistics in the UAE. Select your preferred position below and tap <strong>Apply Now</strong> to proceed to the official Transguard application portal.
+      </p>
+      <div class="mt-3 flex flex-wrap gap-2 text-xs font-medium text-slate-700">
+        <span class="bg-slate-100 px-2.5 py-1 rounded-md">✓ Free Visa & Accommodation</span>
+        <span class="bg-slate-100 px-2.5 py-1 rounded-md">✓ Medical Insurance</span>
+        <span class="bg-slate-100 px-2.5 py-1 rounded-md">✓ Transportation Provided</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Bar -->
+  <section class="max-w-4xl mx-auto px-4 py-3">
+    <input 
+      type="text" 
+      id="searchInput" 
+      onkeyup="filterJobs()" 
+      placeholder="Search job title (e.g., Security, Cleaner, Driver, Concierge)..." 
+      class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-800 text-sm"
+    />
+  </section>
+
+  <!-- Job Listings Container -->
+  <main class="max-w-4xl mx-auto px-4 pb-12">
+    <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Jobs injected via JS -->
+    </div>
+  </main>
+
+  <!-- Redirect Overlay Modal (shown briefly while opening links) -->
+  <div id="redirectModal" class="fixed inset-0 bg-slate-900/75 hidden items-center justify-center z-50 px-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl">
+      <div class="w-12 h-12 border-4 border-blue-900 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
+      <h3 class="text-lg font-bold text-slate-900" id="modalRoleTitle">Preparing Application...</h3>
+      <p class="text-sm text-gray-600 mt-1">Redirecting you to the official Transguard Careers portal...</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 text-xs text-center py-6 px-4">
+    <p>Careers Information Portal • Direct Official Portal Redirect</p>
+    <p class="mt-1 text-slate-500">Note: Transguard Group never charges candidates any recruitment or visa processing fees.</p>
+  </footer>
+
+  <script>
+    // ==========================================
+    // AD LINKS & OFFICIAL PORTAL CONFIGURATION
+    // ==========================================
+    const MONETAG_LINK = "https://uplcm.com/4/12251850";
+    const ADSTERRA_LINK = "https://asiafilm.org/4/93a58ad0be4442e489c43f7bfccd9c95";
+    const OFFICIAL_TRANSGUARD_URL = "https://iaboey.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/jobs";
+
+    // ==========================================
+    // CURRENT TRANSGUARD MULTI-HIRING POSITIONS
+    // ==========================================
+    const jobs = [
+      {
+        title: "Security Guard (SIRA / PSBD)",
+        department: "Security Services",
+        location: "Dubai & Abu Dhabi",
+        type: "Full-Time • Multiple Vacancies"
+      },
+      {
+        title: "Housekeeper / Guest Room Valet",
+        department: "Hospitality & Housekeeping",
+        location: "Dubai, UAE",
+        type: "Full-Time • Immediate Start"
+      },
+      {
+        title: "Cleaner (Commercial & Aviation)",
+        department: "Facilities Management",
+        location: "Dubai, UAE",
+        type: "Full-Time • Multiple Vacancies"
+      },
+      {
+        title: "Concierge (Hospitality)",
+        department: "Hospitality Solutions",
+        location: "Dubai, UAE",
+        type: "Full-Time • 1-2 Yrs Exp"
+      },
+      {
+        title: "Light & Heavy Bus Driver (Cat 3 / Cat 6)",
+        department: "Transport & Logistics",
+        location: "Dubai, UAE",
+        type: "Full-Time • Valid UAE License"
+      },
+      {
+        title: "Coordinator - Facilities Management",
+        department: "Soft Services",
+        location: "Dubai, UAE",
+        type: "Full-Time • Supervisory"
+      },
+      {
+        title: "Administrator / Account Administrator",
+        department: "Workforce Solutions",
+        location: "Dubai, UAE",
+        type: "Full-Time • Office Role"
+      },
+      {
+        title: "Electrical & HVAC Technician",
+        department: "FM Hard Services",
+        location: "Dubai & Fujairah",
+        type: "Full-Time • Technical"
+      },
+      {
+        title: "Waiter / Bartender / Catering Staff",
+        department: "Hospitality & Catering",
+        location: "Dubai, UAE",
+        type: "Contract / Full-Time"
+      },
+      {
+        title: "Warehouse Executive / Loader",
+        department: "Aviation & Logistics",
+        location: "Dubai Airport / DWC",
+        type: "Full-Time • Multiple Vacancies"
+      }
+    ];
+
+    // Render job cards
+    function renderJobs(list) {
+      const grid = document.getElementById("jobsGrid");
+      grid.innerHTML = "";
+
+      list.forEach((job) => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-xs font-semibold text-blue-900 bg-blue-50 px-2.5 py-1 rounded-md">
+                ${job.department}
+              </span>
+              <span class="text-xs text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded">
+                Active
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 leading-snug">${job.title}</h3>
+            <div class="mt-2 space-y-1 text-xs text-gray-500">
+              <p>📍 ${job.location}</p>
+              <p>💼 ${job.type}</p>
+            </div>
+          </div>
+          <button 
+            onclick="handleApply('${job.title.replace(/'/g, "\\'")}')" 
+            class="apply-btn mt-4 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-2.5 px-4 rounded-lg shadow-sm cursor-pointer flex items-center justify-center gap-2">
+            <span>Apply Now</span>
+            <span>→</span>
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Search filter
+    function filterJobs() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = jobs.filter(
+        (j) =>
+          j.title.toLowerCase().includes(query) ||
+          j.department.toLowerCase().includes(query) ||
+          j.location.toLowerCase().includes(query)
+      );
+      renderJobs(filtered);
+    }
+
+    // Trigger Monetag + Adsterra links, then redirect to Transguard Official Site
+    function handleApply(roleTitle) {
+      // Show loading feedback
+      const modal = document.getElementById("redirectModal");
+      document.getElementById("modalRoleTitle").innerText = "Applying: " + roleTitle;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      // 1. Open Monetag Direct Link
+      window.open(MONETAG_LINK, "_blank", "noopener,noreferrer");
+
+      // 2. Open Adsterra Direct Link
+      window.open(ADSTERRA_LINK, "_blank", "noopener,noreferrer");
+
+      // 3. Redirect main window to Official Transguard Careers Portal
+      setTimeout(() => {
+        window.location.href = OFFICIAL_TRANSGUARD_URL;
+      }, 1200);
+    }
+
+    // Initial render
+    renderJobs(jobs);
+  </script>
+</body>
+</html>
