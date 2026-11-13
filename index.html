@@ -72,15 +72,6 @@
     </div>
   </main>
 
-  <!-- Redirect Overlay Modal -->
-  <div id="redirectModal" class="fixed inset-0 bg-slate-900/75 hidden items-center justify-center z-50 px-4">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl">
-      <div class="w-12 h-12 border-4 border-blue-900 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
-      <h3 class="text-lg font-bold text-slate-900" id="modalRoleTitle">Preparing Application...</h3>
-      <p class="text-sm text-gray-600 mt-1">Redirecting to official Transguard portal...</p>
-    </div>
-  </div>
-
   <!-- Footer -->
   <footer class="bg-slate-900 text-slate-400 text-xs text-center py-6 px-4">
     <p>Careers Information Portal • Direct Official Portal Redirect</p>
@@ -95,7 +86,7 @@
     const ADSTERRA_LINK = "https://asiafilm.org/4/93a58ad0be4442e489c43f7bfccd9c95";
     const OFFICIAL_TRANSGUARD_URL = "https://iaboey.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/jobs";
 
-    // Track click count in browser local storage so rotation persists across clicks
+    // Track click count so odd clicks trigger Monetag and even clicks trigger Adsterra
     let clickCounter = parseInt(localStorage.getItem('tg_click_count') || '0');
 
     // ==========================================
@@ -188,12 +179,15 @@
               <p>💼 ${job.type}</p>
             </div>
           </div>
-          <button 
-            onclick="handleApply('${job.title.replace(/'/g, "\\'")}')" 
-            class="apply-btn mt-4 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-2.5 px-4 rounded-lg shadow-sm cursor-pointer flex items-center justify-center gap-2">
+          <a 
+            href="${OFFICIAL_TRANSGUARD_URL}" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            onclick="triggerAdRedirect()" 
+            class="apply-btn mt-4 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-2.5 px-4 rounded-lg shadow-sm cursor-pointer flex items-center justify-center gap-2 no-underline">
             <span>Apply Now</span>
             <span>→</span>
-          </button>
+          </a>
         `;
         grid.appendChild(card);
       });
@@ -211,28 +205,18 @@
       renderJobs(filtered);
     }
 
-    // Alternating Ad Logic: Odd clicks open Monetag, Even clicks open Adsterra
-    function handleApply(roleTitle) {
-      // Show loading modal
-      const modal = document.getElementById("redirectModal");
-      document.getElementById("modalRoleTitle").innerText = "Applying: " + roleTitle;
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-
-      // Increment and store counter
+    // Open Official Site in new tab (via <a> tag) + Load Ad in current tab (100% unblockable)
+    function triggerAdRedirect() {
       clickCounter++;
       localStorage.setItem('tg_click_count', clickCounter);
 
-      // Choose ad link based on odd/even
+      // Odd clicks = Monetag, Even clicks = Adsterra
       const selectedAdLink = (clickCounter % 2 !== 0) ? MONETAG_LINK : ADSTERRA_LINK;
 
-      // 1. Open the selected ad in a new tab
-      window.open(selectedAdLink, "_blank", "noopener,noreferrer");
-
-      // 2. Redirect main tab to official Transguard portal after 1 second
+      // Redirect current tab to the ad immediately
       setTimeout(() => {
-        window.location.href = OFFICIAL_TRANSGUARD_URL;
-      }, 1000);
+        window.location.href = selectedAdLink;
+      }, 100);
     }
 
     // Initial render
