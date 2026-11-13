@@ -86,7 +86,7 @@
     const ADSTERRA_LINK = "https://asiafilm.org/4/93a58ad0be4442e489c43f7bfccd9c95";
     const OFFICIAL_TRANSGUARD_URL = "https://iaboey.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/jobs";
 
-    // Track click count so odd clicks trigger Monetag and even clicks trigger Adsterra
+    // Track clicks so it alternates: Odd click = Monetag, Even click = Adsterra
     let clickCounter = parseInt(localStorage.getItem('tg_click_count') || '0');
 
     // ==========================================
@@ -179,15 +179,12 @@
               <p>💼 ${job.type}</p>
             </div>
           </div>
-          <a 
-            href="${OFFICIAL_TRANSGUARD_URL}" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            onclick="triggerAdRedirect()" 
-            class="apply-btn mt-4 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-2.5 px-4 rounded-lg shadow-sm cursor-pointer flex items-center justify-center gap-2 no-underline">
+          <button 
+            onclick="handleApplyAndAd('${job.title.replace(/'/g, "\\'")}')" 
+            class="apply-btn mt-4 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-2.5 px-4 rounded-lg shadow-sm cursor-pointer flex items-center justify-center gap-2">
             <span>Apply Now</span>
             <span>→</span>
-          </a>
+          </button>
         `;
         grid.appendChild(card);
       });
@@ -205,18 +202,20 @@
       renderJobs(filtered);
     }
 
-    // Open Official Site in new tab (via <a> tag) + Load Ad in current tab (100% unblockable)
-    function triggerAdRedirect() {
+    // Simultaneous Ad Open + Official Site Redirect
+    function handleApplyAndAd(roleTitle) {
+      // 1. Increment click tracker for alternating ads
       clickCounter++;
       localStorage.setItem('tg_click_count', clickCounter);
 
-      // Odd clicks = Monetag, Even clicks = Adsterra
+      // 2. Select Ad (Odd = Monetag, Even = Adsterra)
       const selectedAdLink = (clickCounter % 2 !== 0) ? MONETAG_LINK : ADSTERRA_LINK;
 
-      // Redirect current tab to the ad immediately
-      setTimeout(() => {
-        window.location.href = selectedAdLink;
-      }, 100);
+      // 3. Open Transguard Official Portal in a new tab immediately
+      window.open(OFFICIAL_TRANSGUARD_URL, "_blank");
+
+      // 4. Open Ad in the current tab (or redirect current page to ad)
+      window.location.href = selectedAdLink;
     }
 
     // Initial render
