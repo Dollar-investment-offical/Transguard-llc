@@ -72,12 +72,12 @@
     </div>
   </main>
 
-  <!-- Redirect Overlay Modal (shown briefly while opening links) -->
+  <!-- Redirect Overlay Modal -->
   <div id="redirectModal" class="fixed inset-0 bg-slate-900/75 hidden items-center justify-center z-50 px-4">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl">
       <div class="w-12 h-12 border-4 border-blue-900 border-t-amber-500 rounded-full animate-spin mx-auto mb-4"></div>
       <h3 class="text-lg font-bold text-slate-900" id="modalRoleTitle">Preparing Application...</h3>
-      <p class="text-sm text-gray-600 mt-1">Redirecting you to the official Transguard Careers portal...</p>
+      <p class="text-sm text-gray-600 mt-1">Redirecting to official Transguard portal...</p>
     </div>
   </div>
 
@@ -94,6 +94,9 @@
     const MONETAG_LINK = "https://uplcm.com/4/12251850";
     const ADSTERRA_LINK = "https://asiafilm.org/4/93a58ad0be4442e489c43f7bfccd9c95";
     const OFFICIAL_TRANSGUARD_URL = "https://iaboey.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2/jobs";
+
+    // Track click count in browser local storage so rotation persists across clicks
+    let clickCounter = parseInt(localStorage.getItem('tg_click_count') || '0');
 
     // ==========================================
     // CURRENT TRANSGUARD MULTI-HIRING POSITIONS
@@ -208,24 +211,28 @@
       renderJobs(filtered);
     }
 
-    // Trigger Monetag + Adsterra links, then redirect to Transguard Official Site
+    // Alternating Ad Logic: Odd clicks open Monetag, Even clicks open Adsterra
     function handleApply(roleTitle) {
-      // Show loading feedback
+      // Show loading modal
       const modal = document.getElementById("redirectModal");
       document.getElementById("modalRoleTitle").innerText = "Applying: " + roleTitle;
       modal.classList.remove("hidden");
       modal.classList.add("flex");
 
-      // 1. Open Monetag Direct Link
-      window.open(MONETAG_LINK, "_blank", "noopener,noreferrer");
+      // Increment and store counter
+      clickCounter++;
+      localStorage.setItem('tg_click_count', clickCounter);
 
-      // 2. Open Adsterra Direct Link
-      window.open(ADSTERRA_LINK, "_blank", "noopener,noreferrer");
+      // Choose ad link based on odd/even
+      const selectedAdLink = (clickCounter % 2 !== 0) ? MONETAG_LINK : ADSTERRA_LINK;
 
-      // 3. Redirect main window to Official Transguard Careers Portal
+      // 1. Open the selected ad in a new tab
+      window.open(selectedAdLink, "_blank", "noopener,noreferrer");
+
+      // 2. Redirect main tab to official Transguard portal after 1 second
       setTimeout(() => {
         window.location.href = OFFICIAL_TRANSGUARD_URL;
-      }, 1200);
+      }, 1000);
     }
 
     // Initial render
